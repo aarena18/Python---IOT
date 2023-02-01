@@ -1,20 +1,16 @@
-from machine import Pin
+from machine import Pin, I2C
+from ssd1306 import SSD1306_I2C
+import framebuf
 import time
 
-pinNumber = 17
-pinNumberTwo = 18
-pinNumberThree = 19
+WIDTH = 128
+HEIGHT = 64
 
-ledBlue = Pin(pinNumber, mode=Pin.OUT)
-ledWhite = Pin(pinNumberTwo, mode=Pin.OUT)
-ledRed = Pin(pinNumberThree, mode=Pin.OUT)
+i2c = I2C (0, scl = Pin (17), sda = Pin(16), freq=400000)
 
-while True:
-    ledBlue.toggle()
-    time.sleep(1)
-    ledWhite.toggle()
-    time.sleep(1)
-    ledRed.toggle()
-    time.sleep(1)
-    #led.on()
-    #led.off()
+display = SSD1306_I2C(WIDTH, HEIGHT, i2c)
+display.rotate(1)
+display.fill(0)
+display.text("salut",0,14)
+display.show()
+#display.fill(0)
